@@ -43,7 +43,7 @@ console.log('  "@architect review the system design"');
 console.log('  "Launch emergency response for the database issue"');
 
 console.log(chalk.cyan.bold("\n📖 Documentation:"));
-console.log("  https://github.com/multimedium-dev/codecognition-framework");
+console.log("  https://github.com/MultimediumDesign/codecognition-framework");
 
 console.log(
   chalk.green.bold(

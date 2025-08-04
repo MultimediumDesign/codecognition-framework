@@ -34,9 +34,9 @@
   "author": "CodeCognition Team",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/MultimediumDesign/codecognition-framework/issues"
+    "url": "https://github.com/multimedium-dev/codecognition-framework/issues"
   },
-  "homepage": "https://github.com/MultimediumDesign/codecognition-framework#readme",
+  "homepage": "https://github.com/multimedium-dev/codecognition-framework#readme",
   "engines": {
     "node": ">=14.0.0",
     "npm": ">=6.0.0"

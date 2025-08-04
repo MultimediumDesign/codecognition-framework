@@ -35,10 +35,10 @@ npx codecognition-framework install
 
 ```bash
 # Quick install script
-curl -fsSL https://raw.githubusercontent.com/multimedium-dev/codecognition-framework/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/MultimediumDesign/codecognition-framework/main/install.sh | bash
 
 # Or manual clone
-git clone https://github.com/multimedium-dev/codecognition-framework.git
+git clone https://github.com/MultimediumDesign/codecognition-framework.git
 cd codecognition-framework
 ./install.sh
 ```
@@ -189,7 +189,7 @@ MIT License - see [LICENSE](LICENSE) for details.
 
 ## 🔗 Links
 
-- **GitHub**: https://github.com/multimedium-dev/codecognition-framework
+- **GitHub**: https://github.com/MultimediumDesign/codecognition-framework
 - **NPM**: https://www.npmjs.com/package/codecognition-framework  
 - **Documentation**: https://codecognition.dev
 - **Claude Code**: https://github.com/anthropics/claude-code
@@ -200,7 +200,7 @@ MIT License - see [LICENSE](LICENSE) for details.
 
 **🚀 Ready to supercharge your development workflow?**
 
-[Install CodeCognition](#installation) • [View Documentation](docs/) • [Join Community](https://github.com/multimedium-dev/codecognition-framework/discussions)
+[Install CodeCognition](#installation) • [View Documentation](docs/) • [Join Community](https://github.com/MultimediumDesign/codecognition-framework/discussions)
 
 *Transform your development process with coordinated AI intelligence*
 
