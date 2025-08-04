@@ -1,0 +1,154 @@
+workflow_name: emergency-response
+description: Coordinated emergency response for critical system incidents
+category: operations
+agents_required: [integration-manager, problem-solver, devops-orchestrator, quality-guardian, implementation-engineer]
+estimated_duration: 30 minutes - 4 hours
+parallel_opportunities: true
+quality_gates: [incident_contained, root_cause_identified, fix_validated, monitoring_updated]
+
+phases:
+  1_immediate_response:
+    duration: 0-15 minutes
+    primary_agent: integration-manager
+    supporting_agents: [devops-orchestrator, problem-solver]
+    parallel_execution: true
+    priority: critical
+    deliverables:
+      - Incident severity assessment
+      - Immediate containment actions
+      - Communication to stakeholders
+      - Resource allocation decisions
+    communication_points:
+      - Broadcast emergency alert to all agents
+      - Coordinate with devops-orchestrator on system status
+      - Assign problem-solver to root cause analysis
+      - Alert quality-guardian for security implications
+    
+  2_containment:
+    duration: 15-60 minutes
+    primary_agent: devops-orchestrator
+    supporting_agents: [problem-solver, implementation-engineer]
+    parallel_execution: true
+    priority: critical
+    deliverables:
+      - System stabilization actions
+      - Traffic rerouting or service isolation
+      - Monitoring and alerting adjustments
+      - Rollback execution if needed
+    communication_points:
+      - Continuous status updates to integration-manager
+      - Share operational findings with problem-solver
+      - Coordinate fix deployment with implementation-engineer
+    
+  3_diagnosis:
+    duration: 30-120 minutes
+    primary_agent: problem-solver
+    supporting_agents: [architect, quality-guardian]
+    parallel_execution: true
+    priority: high
+    deliverables:
+      - Root cause analysis
+      - System impact assessment
+      - Reproduction steps and evidence
+      - Fix strategy recommendations
+    communication_points:
+      - Share diagnostic findings with all agents
+      - Consult architect for architectural implications
+      - Coordinate with quality-guardian on security analysis
+      - Provide fix requirements to implementation-engineer
+    
+  4_resolution:
+    duration: 60-180 minutes
+    primary_agent: implementation-engineer
+    supporting_agents: [quality-guardian, devops-orchestrator]
+    parallel_execution: true
+    priority: high
+    deliverables:
+      - Root cause fix implementation
+      - Fix validation and testing
+      - Deployment coordination
+      - System recovery verification
+    communication_points:
+      - Coordinate deployment with devops-orchestrator
+      - Validate fix with quality-guardian
+      - Report completion to integration-manager
+    
+  5_recovery_validation:
+    duration: 30-60 minutes
+    primary_agent: quality-guardian
+    supporting_agents: [devops-orchestrator, problem-solver]
+    parallel_execution: true
+    priority: high
+    deliverables:
+      - System functionality validation
+      - Performance verification
+      - Security posture confirmation
+      - Monitoring validation
+    communication_points:
+      - Confirm recovery with devops-orchestrator
+      - Validate resolution with problem-solver
+      - Report final status to integration-manager
+
+post_incident_activities:
+  documentation_phase:
+    primary_agent: documentation-specialist
+    supporting_agents: [problem-solver, integration-manager]
+    deliverables:
+      - Incident timeline and root cause report
+      - Response effectiveness analysis
+      - Process improvement recommendations
+      - Lessons learned documentation
+  
+  prevention_phase:
+    primary_agent: architect
+    supporting_agents: [quality-guardian, devops-orchestrator]
+    deliverables:
+      - System design improvements
+      - Monitoring and alerting enhancements
+      - Process and procedure updates
+      - Training and preparation improvements
+
+coordination_patterns:
+  emergency_commander: integration-manager
+  communication_frequency: every_15_minutes_during_incident
+  status_reporting: real_time_to_stakeholders
+  decision_authority: integration-manager_with_agent_input
+  resource_allocation: integration-manager_coordinates
+
+escalation_thresholds:
+  severity_1: >2_hour_resolution_time
+  severity_2: >4_hour_resolution_time  
+  severity_3: >8_hour_resolution_time
+  external_help_needed: resource_constraints_identified
+
+success_criteria:
+  - Incident contained within established SLA timeframes
+  - Root cause identified and documented
+  - Fix implemented and validated
+  - System fully recovered with normal operations
+  - Post-incident review completed with actionable improvements
+
+communication_protocols:
+  internal_updates: every_15_minutes_during_active_incident
+  stakeholder_updates: every_30_minutes_or_major_milestone
+  final_report: within_24_hours_of_resolution
+  lessons_learned: within_48_hours_of_resolution
+
+memory_integration:
+  capture_patterns:
+    - Incident response effectiveness
+    - Root cause categories and solutions
+    - System failure modes and indicators
+    - Successful containment and recovery strategies
+  
+  apply_learnings:
+    - Reference similar incident responses
+    - Apply proven diagnostic techniques
+    - Use established containment procedures
+    - Leverage known fix patterns
+
+monitoring_integration:
+  real_time_dashboards: devops-orchestrator_maintains
+  alert_correlation: problem-solver_analyzes
+  performance_tracking: quality-guardian_validates
+  communication_logging: integration-manager_coordinates

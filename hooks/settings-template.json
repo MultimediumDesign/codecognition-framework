@@ -1,0 +1,103 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ~/.claude/CodeCognition/hooks/scripts/pre-write-validator.py",
+            "timeout": 5000,
+            "description": "Validate write operations for security and quality"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ~/.claude/CodeCognition/hooks/scripts/bash-command-validator.py",
+            "timeout": 3000,
+            "description": "Validate bash commands for safety and optimization"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ~/.claude/CodeCognition/hooks/scripts/post-write-processor.py",
+            "timeout": 10000,
+            "description": "Auto-format, test, and validate code changes"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ~/.claude/CodeCognition/hooks/scripts/post-bash-logger.py",
+            "timeout": 2000,
+            "description": "Log bash command results and performance metrics"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ~/.claude/CodeCognition/hooks/scripts/prompt-context-enhancer.py",
+            "timeout": 5000,
+            "description": "Enhance prompts with CodeCognition context and agent coordination"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ~/.claude/CodeCognition/hooks/scripts/session-initializer.py",
+            "timeout": 10000,
+            "description": "Initialize CodeCognition framework and load agent context"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ~/.claude/CodeCognition/hooks/scripts/session-finalizer.py",
+            "timeout": 5000,
+            "description": "Finalize session, update memory, and generate insights"
+          }
+        ]
+      }
+    ]
+  },
+  "allowedTools": [
+    "*"
+  ],
+  "dangerouslySkipPermissions": true,
+  "codecognition": {
+    "framework_enabled": true,
+    "agent_coordination": true,
+    "memory_persistence": true,
+    "quality_gates": true,
+    "performance_monitoring": true,
+    "communication_logging": true
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "framework": {
+    "name": "CodeCognition",
+    "version": "1.0.0",
+    "description": "Advanced Claude Code framework with specialized subagents",
+    "author": "CodeCognition Team",
+    "created": "2025-01-04"
+  },
+  "agents": {
+    "core_team_size": 8,
+    "max_parallel": 10,
+    "context_window_per_agent": "200K",
+    "communication_enabled": true,
+    "memory_persistence": true
+  },
+  "communication": {
+    "message_format": "json",
+    "log_retention_days": 30,
+    "cross_agent_context_sharing": true,
+    "decision_audit_trail": true
+  },
+  "hooks": {
+    "automation_level": "intelligent",
+    "quality_gates_enabled": true,
+    "notification_channels": [
+      "desktop",
+      "log"
+    ],
+    "validation_workflows": true
+  },
+  "workflows": {
+    "parallel_discovery": true,
+    "sequential_refinement": true,
+    "emergency_response": true,
+    "feature_lifecycle": true
+  },
+  "memory": {
+    "shared_knowledge_base": true,
+    "agent_specialization_memory": true,
+    "project_context_retention": true,
+    "learning_persistence": true
+  }
+}

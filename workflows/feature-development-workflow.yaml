@@ -1,0 +1,102 @@
+workflow_name: feature-development
+description: End-to-end feature development with multi-agent coordination
+category: development
+agents_required: [architect, implementation-engineer, quality-guardian, documentation-specialist, integration-manager]
+estimated_duration: 2-8 hours
+parallel_opportunities: true
+quality_gates: [design_review, implementation_review, security_validation, documentation_complete]
+
+phases:
+  1_analysis:
+    primary_agent: architect
+    supporting_agents: [research-analyst]
+    parallel_execution: false
+    deliverables:
+      - Feature requirements analysis
+      - Architectural design decisions
+      - Integration impact assessment
+      - Technology recommendations
+    communication_points:
+      - Share architectural insights with implementation-engineer
+      - Coordinate with quality-guardian on security requirements
+      - Provide context to documentation-specialist for planning
+    
+  2_implementation:
+    primary_agent: implementation-engineer
+    supporting_agents: [architect, quality-guardian]
+    parallel_execution: true
+    deliverables:
+      - Feature implementation code
+      - Unit tests and integration tests
+      - Error handling and edge cases
+      - Performance optimization
+    communication_points:
+      - Regular progress updates to integration-manager
+      - Consult architect for design clarifications
+      - Coordinate with quality-guardian for continuous validation
+    
+  3_quality_validation:
+    primary_agent: quality-guardian
+    supporting_agents: [implementation-engineer, devops-orchestrator]
+    parallel_execution: true
+    deliverables:
+      - Security analysis and validation
+      - Performance testing results
+      - Code quality assessment
+      - Integration testing validation
+    communication_points:
+      - Share security findings with all agents
+      - Coordinate remediation with implementation-engineer
+      - Validate operational readiness with devops-orchestrator
+    
+  4_documentation:
+    primary_agent: documentation-specialist
+    supporting_agents: [architect, implementation-engineer]
+    parallel_execution: true
+    deliverables:
+      - User documentation and guides
+      - API documentation updates
+      - Technical specifications
+      - Troubleshooting guides
+    communication_points:
+      - Gather technical details from implementation-engineer
+      - Review architectural context with architect
+      - Coordinate completion with integration-manager
+
+coordination_patterns:
+  orchestration_agent: integration-manager
+  communication_frequency: every_major_milestone
+  conflict_resolution: integration-manager_leads
+  quality_gate_enforcement: quality-guardian_validates
+  
+success_criteria:
+  - Feature meets functional requirements
+  - All quality gates pass successfully
+  - Security validation complete with no high-severity issues
+  - Documentation complete and user-tested
+  - Performance meets established benchmarks
+
+escalation_procedures:
+  quality_gate_failure:
+    - integration-manager coordinates remediation
+    - quality-guardian defines requirements
+    - implementation-engineer implements fixes
+    - architect reviews if architectural changes needed
+  
+  timeline_risk:
+    - integration-manager assesses scope reduction options
+    - architect evaluates technical alternatives
+    - all agents coordinate on revised approach
+
+memory_integration:
+  capture_patterns:
+    - Successful implementation approaches
+    - Quality issues and their resolutions
+    - Performance optimization techniques
+    - Collaboration patterns that worked well
+  
+  apply_learnings:
+    - Reference similar feature implementations
+    - Apply proven quality validation approaches
+    - Use established documentation templates
+    - Leverage known architectural patterns
