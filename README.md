@@ -2,7 +2,7 @@
 
 > **Transform Claude Code into a coordinated AI development team** with 8 specialized agents, intelligent workflows, and persistent memory.
 
-[![npm version](https://badge.fury.io/js/codecognition-framework.svg)](https://www.npmjs.com/package/codecognition-framework)
+[![GitHub release](https://img.shields.io/github/v/release/MultimediumDesign/codecognition-framework)](https://github.com/MultimediumDesign/codecognition-framework/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-1.0.60%2B-blue)](https://github.com/anthropics/claude-code)
 
@@ -121,21 +121,30 @@ You: Launch emergency response for the database performance issue
 
 ## 🎛️ Management Commands
 
-After installation, you can use these Node.js scripts for management:
+After installation, manage the framework with these commands:
 
 ```bash
-# From the framework directory
-node scripts/install.js        # Install/reinstall the framework
-node bin/codecognition.js status       # Check installation status
-node bin/codecognition.js agents       # List all agents and their status
-node bin/codecognition.js clean        # Clean up old logs
-node bin/codecognition.js uninstall    # Remove the framework
+# Check framework status
+node ~/.claude/CodeCognition/bin/codecognition.js status
+
+# List all agents and their status  
+node ~/.claude/CodeCognition/bin/codecognition.js agents
+
+# Clean up old logs
+node ~/.claude/CodeCognition/bin/codecognition.js clean
+
+# Remove the framework
+node ~/.claude/CodeCognition/bin/codecognition.js uninstall
 ```
 
-Or if you want global access, create an alias:
+For easier access, create a global alias:
 ```bash
 # Add to your ~/.bashrc or ~/.zshrc
-alias codecognition="node $HOME/.claude/CodeCognition/bin/codecognition.js"
+alias codecognition="node ~/.claude/CodeCognition/bin/codecognition.js"
+
+# Then use simply:
+codecognition status
+codecognition agents
 ```
 
 ## 🔧 Configuration
