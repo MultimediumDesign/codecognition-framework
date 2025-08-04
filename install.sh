@@ -42,11 +42,16 @@ echo "📦 Installing CodeCognition framework..."
 TEMP_DIR=$(mktemp -d)
 cd "$TEMP_DIR"
 
-# Clone from GitHub (replace with actual repo URL)
+# Clone from GitHub
 echo "Downloading framework..."
-# For now, copy from current directory (this would be git clone in actual usage)
-cp -r "$(dirname "$0")" codecognition-framework
-cd codecognition-framework
+if command -v git &> /dev/null; then
+    git clone https://github.com/MultimediumDesign/codecognition-framework.git
+    cd codecognition-framework
+else
+    echo "Git not found, downloading archive..."
+    curl -L https://github.com/MultimediumDesign/codecognition-framework/archive/main.tar.gz | tar xz
+    cd codecognition-framework-main
+fi
 
 # Install dependencies and run installation
 echo "Installing Node.js dependencies..."

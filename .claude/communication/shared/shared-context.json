@@ -1,0 +1,14 @@
+{
+  "lastUpdated": "2025-08-04 10:26:22",
+  "activeAgents": [
+    "general-purpose"
+  ],
+  "sharedKnowledge": {
+    "currentProject": "web-development",
+    "techStack": [],
+    "patterns": {},
+    "decisions": {}
+  },
+  "collaborationQueue": [],
+  "blockers": []
+}

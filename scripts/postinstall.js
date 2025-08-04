@@ -24,16 +24,16 @@ try {
 
 console.log(chalk.cyan.bold("🚀 Quick Start:"));
 console.log(
-  "  " + chalk.cyan("codecognition install") + " - Install the framework",
+  "  Install: curl -fsSL https://raw.githubusercontent.com/MultimediumDesign/codecognition-framework/main/install.sh | bash",
 );
 console.log(
-  "  " + chalk.cyan("codecognition status") + "  - Check installation status",
+  "  Status:  node ~/.claude/CodeCognition/bin/codecognition.js status",
 );
 console.log(
-  "  " + chalk.cyan("codecognition agents") + "  - List available agents",
+  "  Agents:  node ~/.claude/CodeCognition/bin/codecognition.js agents",
 );
 console.log(
-  "  " + chalk.cyan("codecognition docs") + "    - View documentation",
+  "  Docs:    https://github.com/MultimediumDesign/codecognition-framework#readme",
 );
 
 console.log(chalk.cyan.bold("\n🤖 Usage Examples:"));
@@ -58,14 +58,17 @@ const frameworkDir = path.join(homeDir, ".claude", "CodeCognition");
 if (fs.pathExistsSync(frameworkDir)) {
   console.log(chalk.yellow.bold("\n💡 Framework already installed!"));
   console.log(
-    "   Run " + chalk.cyan("codecognition status") + " to check configuration",
+    "   Run " +
+      chalk.cyan("node ~/.claude/CodeCognition/bin/codecognition.js status") +
+      " to check configuration",
   );
 } else {
   console.log(
     chalk.yellow.bold(
-      "\n⚡ Next: Run " +
-        chalk.cyan("codecognition install") +
-        " to activate the framework",
+      "\n⚡ Next: Run the install script to activate the framework",
     ),
+  );
+  console.log(
+    "curl -fsSL https://raw.githubusercontent.com/MultimediumDesign/codecognition-framework/main/install.sh | bash",
   );
 }

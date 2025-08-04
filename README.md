@@ -21,26 +21,36 @@ CodeCognition leverages Claude Code's 2025 cutting-edge features (subagents, hoo
 
 ## 🚀 Installation
 
-### Option 1: NPM/NPX (Recommended)
+### Option 1: Quick Install Script (Recommended)
 
 ```bash
-# Install globally
-npm install -g codecognition-framework
-
-# Or use npx (no installation required)
-npx codecognition-framework install
+# One-command installation
+curl -fsSL https://raw.githubusercontent.com/MultimediumDesign/codecognition-framework/main/install.sh | bash
 ```
 
-### Option 2: Direct GitHub Install
+### Option 2: Manual Installation
 
 ```bash
-# Quick install script
-curl -fsSL https://raw.githubusercontent.com/MultimediumDesign/codecognition-framework/main/install.sh | bash
-
-# Or manual clone
+# Clone repository
 git clone https://github.com/MultimediumDesign/codecognition-framework.git
 cd codecognition-framework
-./install.sh
+
+# Install dependencies
+npm install
+
+# Run installation
+node scripts/install.js
+```
+
+### Option 3: Direct Download
+
+```bash
+# Download and install manually
+wget https://github.com/MultimediumDesign/codecognition-framework/archive/main.zip
+unzip main.zip
+cd codecognition-framework-main
+npm install
+node scripts/install.js
 ```
 
 ### Prerequisites
@@ -53,15 +63,12 @@ cd codecognition-framework
 
 ```bash
 # 1. Install the framework
-codecognition install
+curl -fsSL https://raw.githubusercontent.com/MultimediumDesign/codecognition-framework/main/install.sh | bash
 
-# 2. Verify installation  
-codecognition status
-
-# 3. Start Claude Code
+# 2. Start Claude Code (framework auto-initializes)
 claude
 
-# 4. Test multi-agent coordination
+# 3. Test multi-agent coordination
 ```
 
 **In Claude Code:**
@@ -114,13 +121,21 @@ You: Launch emergency response for the database performance issue
 
 ## 🎛️ Management Commands
 
+After installation, you can use these Node.js scripts for management:
+
 ```bash
-codecognition install          # Install the framework
-codecognition status           # Check installation and configuration
-codecognition agents           # List all agents and their status
-codecognition docs             # Open documentation
-codecognition clean            # Clean up old logs and temporary files
-codecognition uninstall        # Remove the framework
+# From the framework directory
+node scripts/install.js        # Install/reinstall the framework
+node bin/codecognition.js status       # Check installation status
+node bin/codecognition.js agents       # List all agents and their status
+node bin/codecognition.js clean        # Clean up old logs
+node bin/codecognition.js uninstall    # Remove the framework
+```
+
+Or if you want global access, create an alias:
+```bash
+# Add to your ~/.bashrc or ~/.zshrc
+alias codecognition="node $HOME/.claude/CodeCognition/bin/codecognition.js"
 ```
 
 ## 🔧 Configuration
@@ -190,8 +205,8 @@ MIT License - see [LICENSE](LICENSE) for details.
 ## 🔗 Links
 
 - **GitHub**: https://github.com/MultimediumDesign/codecognition-framework
-- **NPM**: https://www.npmjs.com/package/codecognition-framework  
-- **Documentation**: https://codecognition.dev
+- **Documentation**: https://github.com/MultimediumDesign/codecognition-framework#readme
+- **Issues**: https://github.com/MultimediumDesign/codecognition-framework/issues
 - **Claude Code**: https://github.com/anthropics/claude-code
 
 ---
