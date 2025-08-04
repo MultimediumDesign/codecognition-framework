@@ -145,6 +145,10 @@ alias codecognition="node ~/.claude/CodeCognition/bin/codecognition.js"
 # Then use simply:
 codecognition status
 codecognition agents
+
+# Git worktree integration
+codecognition worktree create feature-auth --preset frontend
+codecognition worktree list
 ```
 
 ## 🔧 Configuration
@@ -190,10 +194,26 @@ CodeCognition Framework
 └── Emergency Response Coordination
 ```
 
+## 🌳 Git Worktree Integration
+
+Create parallel development environments with specialized agent teams:
+
+```bash
+# Create feature worktrees with dedicated teams
+codecognition worktree create auth-system --preset backend
+codecognition worktree create user-dashboard --preset frontend
+codecognition worktree create api-optimization --preset fullstack
+
+# Each worktree gets its own CodeCognition instance with specialized agents
+cd ../auth-system && claude
+# "@architect and @implementation-engineer will work on authentication"
+```
+
 ## 📚 Documentation
 
 - **[Quick Start Guide](docs/quick-start-guide.md)** - Get running in 5 minutes
 - **[Framework Guide](docs/framework-guide.md)** - Complete feature overview  
+- **[Worktree Guide](docs/worktree-guide.md)** - Parallel development with agent teams
 - **[Installation Guide](INSTALLATION.md)** - Detailed setup instructions
 - **[Agent Specifications](agents/)** - Individual agent capabilities
 - **[Workflow Patterns](workflows/)** - Pre-built coordination templates

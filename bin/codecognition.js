@@ -374,6 +374,294 @@ program
     console.log(chalk.green(`✅ Cleaned ${cleanedCount} old files`));
   });
 
+// Worktree management commands
+const worktreeCommand = program
+  .command("worktree")
+  .description("Manage git worktrees with CodeCognition agent teams");
+
+worktreeCommand
+  .command("create <name>")
+  .description("Create a new worktree with assigned agent team")
+  .option("-b, --branch <branch>", "Create new branch for worktree")
+  .option("-a, --agents <agents>", "Comma-separated list of agents to assign")
+  .option("-p, --preset <preset>", "Use predefined agent team preset")
+  .option("--path <path>", "Custom path for worktree (default: ../<name>)")
+  .action(async (name, options) => {
+    const { execSync } = require("child_process");
+
+    console.log(
+      chalk.blue.bold(`🌳 Creating CodeCognition Worktree: ${name}\n`),
+    );
+
+    // Validate we're in a git repository
+    try {
+      execSync("git rev-parse --is-inside-work-tree", { stdio: "ignore" });
+    } catch (error) {
+      console.error(chalk.red("❌ Not in a git repository"));
+      return;
+    }
+
+    // Define agent team presets
+    const presets = {
+      frontend: [
+        "implementation-engineer",
+        "documentation-specialist",
+        "quality-guardian",
+      ],
+      backend: ["architect", "implementation-engineer", "devops-orchestrator"],
+      fullstack: [
+        "architect",
+        "implementation-engineer",
+        "quality-guardian",
+        "devops-orchestrator",
+      ],
+      emergency: ["problem-solver", "quality-guardian", "devops-orchestrator"],
+      research: ["research-analyst", "architect", "documentation-specialist"],
+      deployment: [
+        "devops-orchestrator",
+        "quality-guardian",
+        "integration-manager",
+      ],
+    };
+
+    // Determine agent assignment
+    let selectedAgents = [];
+    if (options.preset && presets[options.preset]) {
+      selectedAgents = presets[options.preset];
+      console.log(chalk.cyan(`📋 Using preset: ${options.preset}`));
+    } else if (options.agents) {
+      selectedAgents = options.agents.split(",").map((a) => a.trim());
+    } else {
+      selectedAgents = ["implementation-engineer", "quality-guardian"]; // default
+    }
+
+    // Create worktree path
+    const worktreePath = options.path || `../${name}`;
+
+    try {
+      // Create git worktree
+      const branchFlag = options.branch ? `-b ${options.branch}` : "";
+      const command = `git worktree add ${worktreePath} ${branchFlag}`.trim();
+
+      console.log(chalk.gray(`Running: ${command}`));
+      execSync(command, { stdio: "inherit" });
+
+      // Copy CodeCognition to new worktree
+      const homeDir = os.homedir();
+      const sourceCognition = path.join(homeDir, ".claude", "CodeCognition");
+      const targetCognition = path.join(
+        worktreePath,
+        ".claude",
+        "CodeCognition",
+      );
+
+      if (await fs.pathExists(sourceCognition)) {
+        await fs.ensureDir(path.join(worktreePath, ".claude"));
+        await fs.copy(sourceCognition, targetCognition);
+        console.log(
+          chalk.green("✅ CodeCognition framework copied to worktree"),
+        );
+      }
+
+      // Create agent assignment file
+      const assignmentFile = path.join(targetCognition, "worktree-config.json");
+      const config = {
+        name: name,
+        created: new Date().toISOString(),
+        assigned_agents: selectedAgents,
+        preset: options.preset || "custom",
+        parent_worktree: process.cwd(),
+      };
+
+      await fs.writeJson(assignmentFile, config, { spaces: 2 });
+
+      console.log(chalk.green.bold("\n🎉 Worktree created successfully!"));
+      console.log(chalk.cyan(`📁 Path: ${worktreePath}`));
+      console.log(
+        chalk.cyan(
+          `🤖 Assigned agents: ${selectedAgents.map((a) => "@" + a).join(", ")}`,
+        ),
+      );
+      console.log(chalk.yellow(`\n💡 Next steps:`));
+      console.log(`   cd ${worktreePath}`);
+      console.log(`   claude`);
+      console.log(
+        `   "Let ${selectedAgents.map((a) => "@" + a).join(" and ")} work on this feature"`,
+      );
+    } catch (error) {
+      console.error(
+        chalk.red(`❌ Failed to create worktree: ${error.message}`),
+      );
+    }
+  });
+
+worktreeCommand
+  .command("list")
+  .description("List all worktrees with their CodeCognition configurations")
+  .action(async () => {
+    const { execSync } = require("child_process");
+
+    console.log(chalk.blue.bold("🌳 CodeCognition Worktrees\n"));
+
+    try {
+      const output = execSync("git worktree list --porcelain", {
+        encoding: "utf8",
+      });
+      const worktrees = [];
+
+      let current = {};
+      for (const line of output.split("\n")) {
+        if (line.startsWith("worktree ")) {
+          if (current.path) worktrees.push(current);
+          current = { path: line.replace("worktree ", "") };
+        } else if (line.startsWith("branch ")) {
+          current.branch = line.replace("branch refs/heads/", "");
+        }
+      }
+      if (current.path) worktrees.push(current);
+
+      for (const worktree of worktrees) {
+        const configFile = path.join(
+          worktree.path,
+          ".claude",
+          "CodeCognition",
+          "worktree-config.json",
+        );
+        let config = null;
+
+        if (await fs.pathExists(configFile)) {
+          config = await fs.readJson(configFile);
+        }
+
+        const isMain = worktree.path.endsWith("CodeCognition");
+        const status = isMain
+          ? chalk.green("📍 Main")
+          : chalk.cyan("🌿 Worktree");
+
+        console.log(`${status} ${chalk.bold(path.basename(worktree.path))}`);
+        console.log(`   📁 ${chalk.gray(worktree.path)}`);
+        if (worktree.branch) {
+          console.log(`   🌱 ${chalk.yellow(worktree.branch)}`);
+        }
+
+        if (config) {
+          console.log(
+            `   🤖 ${chalk.cyan(config.assigned_agents.map((a) => "@" + a).join(", "))}`,
+          );
+          if (config.preset !== "custom") {
+            console.log(`   📋 ${chalk.magenta(config.preset + " preset")}`);
+          }
+        }
+        console.log();
+      }
+    } catch (error) {
+      console.error(chalk.red("❌ Failed to list worktrees:", error.message));
+    }
+  });
+
+worktreeCommand
+  .command("remove <name>")
+  .description("Remove a worktree and clean up CodeCognition data")
+  .option("--force", "Force remove even with uncommitted changes")
+  .action(async (name, options) => {
+    const { execSync } = require("child_process");
+
+    console.log(chalk.yellow.bold(`🗑️  Removing Worktree: ${name}\n`));
+
+    try {
+      const forceFlag = options.force ? "--force" : "";
+      const command = `git worktree remove ${name} ${forceFlag}`.trim();
+
+      console.log(chalk.gray(`Running: ${command}`));
+      execSync(command, { stdio: "inherit" });
+
+      console.log(chalk.green("✅ Worktree removed successfully"));
+    } catch (error) {
+      console.error(
+        chalk.red(`❌ Failed to remove worktree: ${error.message}`),
+      );
+      if (!options.force) {
+        console.log(chalk.yellow("💡 Try with --force to remove anyway"));
+      }
+    }
+  });
+
+worktreeCommand
+  .command("sync")
+  .description("Sync agent insights across all worktrees")
+  .action(async () => {
+    const { execSync } = require("child_process");
+
+    console.log(chalk.blue.bold("🔄 Syncing CodeCognition Across Worktrees\n"));
+
+    try {
+      const output = execSync("git worktree list --porcelain", {
+        encoding: "utf8",
+      });
+      const worktrees = [];
+
+      let current = {};
+      for (const line of output.split("\n")) {
+        if (line.startsWith("worktree ")) {
+          if (current.path) worktrees.push(current);
+          current = { path: line.replace("worktree ", "") };
+        }
+      }
+      if (current.path) worktrees.push(current);
+
+      console.log(chalk.cyan(`Found ${worktrees.length} worktrees`));
+
+      // Collect insights from all worktrees
+      const insights = [];
+      for (const worktree of worktrees) {
+        const memoryDir = path.join(
+          worktree.path,
+          ".claude",
+          "CodeCognition",
+          "memory",
+          "agents",
+        );
+        if (await fs.pathExists(memoryDir)) {
+          const files = await fs.readdir(memoryDir);
+          for (const file of files) {
+            const filePath = path.join(memoryDir, file);
+            const content = await fs.readFile(filePath, "utf8");
+            insights.push({
+              worktree: path.basename(worktree.path),
+              agent: file.replace(".md", ""),
+              content: content.slice(-500), // Last 500 chars for recent insights
+            });
+          }
+        }
+      }
+
+      // Create sync report
+      const homeDir = os.homedir();
+      const syncReport = path.join(
+        homeDir,
+        ".claude",
+        "CodeCognition",
+        "communication",
+        "worktree-sync.json",
+      );
+      await fs.writeJson(
+        syncReport,
+        {
+          timestamp: new Date().toISOString(),
+          worktrees: worktrees.length,
+          insights: insights.length,
+          data: insights,
+        },
+        { spaces: 2 },
+      );
+
+      console.log(chalk.green(`✅ Synced ${insights.length} agent insights`));
+      console.log(chalk.gray(`📄 Report saved: ${syncReport}`));
+    } catch (error) {
+      console.error(chalk.red("❌ Sync failed:", error.message));
+    }
+  });
+
 // Handle unknown commands
 program.on("command:*", () => {
   console.error(chalk.red("Invalid command: %s"), program.args.join(" "));
